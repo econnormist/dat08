@@ -4,10 +4,10 @@ An 808-style sound expander in the browser for the **Dato DRUM** sequencer.
 
 Plug the Dato DRUM in over USB and every step it plays is sent as MIDI to this page, which plays
 synthesized 808-style sounds instead of the Dato's onboard kit. No samples: every sound is built
-live with the Web Audio API. The page looks like a classic 808-style panel: an instrument section with
-Level and Tune knobs per pad (Tune follows the Dato's sliders), an effects section, and a row of 16
-red/orange/yellow/cream keys that play the variants (variation A = 1–4, B = 5–8) and light up as the
-Dato plays them.
+live with the Web Audio API. The page keeps the Dato's own octagon layout, built from 808 parts:
+the four pads are red/orange/yellow/cream 808 keys with variant LEDs, the effects are round 808
+buttons, the sliders are 808 faders, and the center is a tempo dial with 16 step LEDs that chase
+the Dato's clock.
 
 ## Play it
 
@@ -18,7 +18,7 @@ since Safari has no Web MIDI) and plug in the Dato DRUM.
 2. Press **Start** and allow MIDI access.
 3. Play. Pick variants with the ◀ ▶ arrows on the Dato as usual.
 
-No Dato at hand? Click the 16 keys (or press `1`–`4`), switch variation A/B, and turn the Crush or Filter knob.
+No Dato at hand? Click the pads (or press `1`–`4`), use the on-screen arrows, and hold Crush or Filter.
 
 ## Sounds: 4 pads × 8 variants
 
