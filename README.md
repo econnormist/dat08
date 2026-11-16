@@ -1,4 +1,4 @@
-# DATO-808
+# DAT08
 
 An 808-style sound expander in the browser for the **Dato DRUM** sequencer.
 
