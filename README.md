@@ -1,20 +1,57 @@
 # DATO-808
 
-An 808-style drum kit in the browser for the **Dato DRUM** sequencer.
+An 808-style sound expander in the browser for the **Dato DRUM** sequencer.
 
-Plug the Dato DRUM in over USB, and every step it plays is sent as MIDI to this page, which plays
+Plug the Dato DRUM in over USB and every step it plays is sent as MIDI to this page, which plays
 synthesized 808-style sounds instead of the Dato's onboard kit. No samples: every sound is built
-live with the Web Audio API.
-
-## Sounds
-
-Bass drum, snare drum, low tom, hi tom, hand clap, cowbell, closed hi-hat and open hi-hat.
-The closed hat chokes a ringing open hat. Each sound has Level, Tune and Decay knobs.
+live with the Web Audio API. The page is laid out like the Dato itself: an octagon with the four
+pads, the four effect buttons and the sliders where they are on the device.
 
 ## Play it
 
 **Live:** <https://econnormist.github.io/dato-808/>. Open it in Chrome (or another Chromium browser,
 since Safari has no Web MIDI) and plug in the Dato DRUM.
+
+1. Turn the Dato's own volume all the way down.
+2. Press **Start** and allow MIDI access.
+3. Play. Pick variants with the ◀ ▶ arrows on the Dato as usual.
+
+No Dato at hand? Click the pads (or press `1`–`4`), use the on-screen arrows, and hold Crush or Filter.
+
+## Sounds: 4 pads × 8 variants
+
+| Pad | Notes | Variants |
+|---|---|---|
+| Top | 38–45 | Snare, Snare Tight, Snare Fat, Rim Shot, Clap, Clap Big, Snare Clap, Snap |
+| Right | 46–53 | Closed Hat, Tick Hat, Open Hat, Open Long, Maracas, Cymbal, Ride, Low Hat |
+| Bottom | 54–61 | Low Tom, Mid Tom, Hi Tom, Low Conga, Hi Conga, Cowbell, Claves, 808 Bass |
+| Left | 30–37 | Kick Tight, Kick Punch, Kick 808, Kick Boom, Kick Sub, Kick Drive, Kick High, Kick Dive |
+
+Closed hats and maracas choke a ringing open hat.
+
+## Dato DRUM MIDI map
+
+Measured from the device over USB. Everything is on MIDI channel 10.
+
+| Control | MIDI | Handled by |
+|---|---|---|
+| Pads + variants | notes 30–61 (see above); tap = velocity 127, sequencer = 100 | this page |
+| Sliders (left, top, right, bottom) | CC 21, 22, 23, 24 | this page: ±7 semitones pitch for that pad |
+| Crush (green) | CC 12, pressure-like 0–127 | this page: bit-crusher + sample-rate reduction |
+| Filter (blue) | CC 74 (CC 75 is its inverse) | this page: resonant low-pass sweep |
+| Repeat (red) | CC 17 | the Dato: it re-sends the notes |
+| Random (yellow) | CC 16 | the Dato: it sends extra notes |
+| Swing switch | CC 9 (1 / 64 / 127) | the Dato: it shifts note timing; shown here |
+| Tempo knob | CC 15; MIDI clock follows | shown here, from the clock |
+| Volume knob | CC 7 | shown here; optionally follows |
+
+The Dato sends MIDI clock continuously, even when stopped, and never sends start/stop.
+
+`tools/midimon.swift` is the macOS MIDI monitor used to work this out:
+
+```bash
+swift tools/midimon.swift dato
+```
 
 ## Run it locally
 
@@ -24,20 +61,6 @@ Web MIDI needs a secure origin such as `localhost`:
 python3 -m http.server 8808
 ```
 
-Then open <http://localhost:8808/808-kit.html>.
-
-1. Turn the Dato's own volume all the way down.
-2. Press **Start** and allow MIDI access.
-3. Hit play on the Dato.
-
-## Features
-
-- **Auto-assign:** MIDI notes the kit hasn't seen yet go to the next free sound. Defaults follow the
-  General MIDI drum map (36 kick, 38 snare, 42 closed hat, and so on).
-- **Learn:** click Learn on a sound, then hit a pad on the Dato to tie them together.
-- **Step lights and tempo:** the 16 step LEDs and the tempo readout follow the Dato's MIDI clock.
-- **Accent:** note velocity sets the hit's loudness (can be switched off).
-- Click the coloured keys or press `1`–`8` to play sounds without the Dato.
-- Knobs: drag up and down, scroll, or use the arrow keys; double-click resets. Settings are saved in the browser.
+Then open <http://localhost:8808/>.
 
 Not affiliated with Dato or Roland.
