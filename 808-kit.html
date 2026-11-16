@@ -6,116 +6,150 @@
 <title>808 Kit</title>
 <style>
   :root {
-    --room: #0e0d0c; --bezel: #121110; --body: #2c2b29; --body-hi: #3a3836; --ink: #f3ece0; --muted: #a89f92;
+    --room: #0e0d0c; --body: #2b2a28; --body-hi: #393735; --panel: #4a4845; --panel-lo: #3d3b38; --strip: #1f1e1c;
+    --ink: #f3ece0; --muted: #b3aa9c; --silk: #e9e1d2;
     --red: #e2432a; --orange: #f0892a; --yellow: #f4c52f; --cream: #efe6cf;
-    --fx-random: #f2c230; --fx-crush: #3fcf6e; --fx-repeat: #e8352a; --fx-filter: #2f9cf0;
-    --lcd: #120806; --lcd-ink: #ff6a3d;
+    --led-off: #4a1a14; --led-on: #ff3b1f;
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: radial-gradient(ellipse at top, #1f1d1a, var(--room) 70%); color: var(--ink);
+  body { margin: 0; background: radial-gradient(ellipse at top, #1d1b19, var(--room) 70%); color: var(--ink);
     font: 14px/1.35 "Helvetica Neue", Helvetica, Arial, sans-serif; min-height: 100vh; }
-  main { max-width: 760px; margin: 0 auto; padding: 22px 16px 40px; }
-  h1 { margin: 0 0 14px; font-size: 26px; font-weight: 800; font-style: italic; letter-spacing: .04em; }
-  h1 i { color: var(--orange); }
-  h1 small { font-style: normal; font-weight: 600; font-size: 10px; letter-spacing: .3em; color: var(--muted); text-transform: uppercase; margin-left: 10px; }
+  main { max-width: 1120px; margin: 0 auto; padding: 26px 16px 40px; }
 
-  /* ---------- machine ---------- */
-  .dato { position: relative; width: 100%; aspect-ratio: 1; container-type: inline-size; user-select: none; }
-  .oct { position: absolute; clip-path: polygon(29.3% 0, 70.7% 0, 100% 29.3%, 100% 70.7%, 70.7% 100%, 29.3% 100%, 0 70.7%, 0 29.3%); }
-  .oct.outer { inset: 0; background: linear-gradient(160deg, #262422, var(--bezel)); }
-  .oct.inner { inset: 3%; background: radial-gradient(circle at 50% 40%, var(--body-hi), var(--body) 65%);
-    box-shadow: inset 0 0 40px rgba(0,0,0,.5); }
-  .at { position: absolute; transform: translate(-50%, -50%); }
-  .lbl { font-size: 1.55cqw; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+  .machine { background: linear-gradient(180deg, var(--body-hi), var(--body) 6%, var(--body)); border-radius: 12px; border: 1px solid #000;
+    overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08); user-select: none; }
 
-  /* pads */
-  .pad { width: 17cqw; height: 17cqw; border-radius: 1.6cqw; border: .5cqw solid var(--c); background: var(--lcd); cursor: pointer;
-    display: flex; flex-direction: column; justify-content: space-between; align-items: center; padding: 1.3cqw .8cqw;
-    box-shadow: 0 .8cqw 1.4cqw rgba(0,0,0,.5), inset 0 0 1.2cqw rgba(0,0,0,.8); transition: background .18s, box-shadow .18s; }
-  .pad .group { font-size: 1.3cqw; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
-  .pad .vname { font-family: ui-monospace, Menlo, monospace; font-size: 2.15cqw; line-height: 1.1; text-align: center; color: var(--lcd-ink);
-    text-shadow: 0 0 .6cqw rgba(255,90,50,.6); text-transform: uppercase; font-weight: 700; }
-  .pad .dots { display: flex; gap: .55cqw; }
-  .pad .dots i { width: .9cqw; height: .9cqw; border-radius: 50%; background: #3a1a12; }
-  .pad .dots i.on { background: var(--lcd-ink); box-shadow: 0 0 .6cqw var(--lcd-ink); }
-  .pad.hit { background: var(--c); box-shadow: 0 0 3cqw var(--c), inset 0 0 1cqw rgba(0,0,0,.3); transition: none; }
-  .pad.hit .vname, .pad.hit .group { color: #1a1410; text-shadow: none; }
-  .pad.hit .dots i.on { background: #1a1410; box-shadow: none; }
-  .arrow { width: 0; height: 0; cursor: pointer; border: 1.3cqw solid transparent; opacity: .75; }
-  .arrow:hover { opacity: 1; }
-  .arrow.l { border-right: 1.8cqw solid var(--ink); border-left-width: 0; }
-  .arrow.r { border-left: 1.8cqw solid var(--ink); border-right-width: 0; }
-  .arrow.u { border-bottom: 1.8cqw solid var(--ink); border-top-width: 0; }
-  .arrow.d { border-top: 1.8cqw solid var(--ink); border-bottom-width: 0; }
+  /* top strip */
+  .top { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 30px; padding: 18px 24px; border-bottom: 2px solid #111; }
+  .brand { display: flex; flex-direction: column; margin-right: auto; }
+  .brand b { font-size: 32px; letter-spacing: .04em; font-weight: 800; font-style: italic; line-height: 1; }
+  .brand b i { color: var(--orange); }
+  .brand small { color: var(--muted); letter-spacing: .34em; font-size: 10px; text-transform: uppercase; margin-top: 6px; }
+  .ctrl { display: flex; flex-direction: column; align-items: center; gap: 7px; }
+  .lbl { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--silk); font-weight: 800; text-align: center; white-space: nowrap; }
+  .readout { font-family: ui-monospace, Menlo, monospace; background: #120806; color: #ff5a36; border: 2px solid #000; border-radius: 4px;
+    padding: 4px 10px; min-width: 70px; text-align: center; font-size: 22px; letter-spacing: .08em; text-shadow: 0 0 6px rgba(255,80,40,.7); }
+  .sel { display: flex; gap: 10px; align-items: center; }
+  .sel span { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 9px; font-weight: 800; color: var(--muted); }
+  .abtn { display: flex; flex-direction: column; align-items: center; gap: 5px; background: none; border: none; color: var(--silk);
+    font: 800 10px/1 inherit; cursor: pointer; padding: 0; }
+  .abtn i { width: 26px; height: 16px; border-radius: 3px; background: #6c6863; box-shadow: 0 3px 0 #2c2a28, inset 0 1px 0 rgba(255,255,255,.3); }
+  .abtn:active i { transform: translateY(2px); box-shadow: 0 1px 0 #2c2a28; }
+  .start { font: 800 11px/1 inherit; letter-spacing: .14em; text-transform: uppercase; cursor: pointer; background: var(--red); color: #fff;
+    border: none; border-radius: 4px; padding: 12px 16px; box-shadow: 0 3px 0 #7d1d10; }
+  .start:active { transform: translateY(2px); box-shadow: 0 1px 0 #7d1d10; }
+  .start.on { background: #6b6560; box-shadow: 0 3px 0 #2c2a28; }
+  .status { display: flex; align-items: center; gap: 7px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .led { width: 9px; height: 9px; border-radius: 50%; background: var(--led-off); box-shadow: inset 0 1px 1px rgba(0,0,0,.6); flex: none; }
+  .led.on { background: var(--led-on); box-shadow: 0 0 6px 1px rgba(255,60,30,.8), inset 0 -1px 1px rgba(255,255,255,.3); }
+  .led.green.on { background: #59e36f; box-shadow: 0 0 6px 1px rgba(80,230,110,.8); }
+  .led.sm { width: 6px; height: 6px; }
 
-  /* sliders */
-  .track { background: #151413; border-radius: 1cqw; box-shadow: inset 0 .2cqw .4cqw rgba(0,0,0,.7); overflow: hidden; }
-  .track.v { width: 1.6cqw; height: 13cqw; }
-  .track.h { width: 13cqw; height: 1.6cqw; }
-  .track .fill { position: absolute; background: var(--c); opacity: .85; }
-  .track.v .fill { left: 0; right: 0; bottom: 0; height: calc(var(--v) * 100%); }
-  .track.h .fill { top: 0; bottom: 0; left: 0; width: calc(var(--v) * 100%); }
-  .track { position: absolute; }
+  /* instrument + effect section */
+  .voices { display: grid; grid-template-columns: repeat(4, 1fr) 6px repeat(4, 1fr); background: var(--panel); border-bottom: 2px solid #111; }
+  .gap { background: #2a2826; }
+  .col { display: flex; flex-direction: column; align-items: center; gap: 11px; padding: 14px 6px 18px; border-right: 1px solid var(--panel-lo); }
+  .col:nth-child(4), .col:last-child { border-right: none; }
+  .vname { min-height: 26px; display: flex; align-items: center; text-align: center; font-weight: 800; font-size: 11px;
+    letter-spacing: .1em; text-transform: uppercase; line-height: 1.15; }
+  .tag { font-size: 9.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #1a1714; background: var(--silk);
+    border-radius: 2px; padding: 3px 6px; min-width: 84px; text-align: center; white-space: nowrap; }
+  .tag.dim { background: transparent; color: var(--muted); border: 1px solid #6b6762; }
+  .vleds { display: flex; gap: 4px; }
 
-  /* effects */
-  .fx { width: 11cqw; height: 11cqw; border-radius: 50%; border: none; cursor: pointer; --a: 0;
-    background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--c) 70%, #fff), var(--c) 60%);
-    filter: brightness(calc(.55 + var(--a) * .75)) saturate(calc(.7 + var(--a) * .5));
-    box-shadow: 0 .9cqw 1.4cqw rgba(0,0,0,.55), 0 0 calc(var(--a) * 5cqw) var(--c); transform: translate(-50%, -50%) scale(calc(1 - var(--a) * .06)); }
-  .fxl { font-size: 1.5cqw; }
+  .knob { --v: .5; width: 46px; height: 46px; border-radius: 50%; position: relative; cursor: ns-resize; touch-action: none; outline: none;
+    background: radial-gradient(circle at 50% 35%, #2a2928, #0f0f0f 70%); box-shadow: 0 3px 5px rgba(0,0,0,.55), inset 0 1px 1px rgba(255,255,255,.15); }
+  .knob::before { content: ""; position: absolute; inset: 9px; border-radius: 50%; background: var(--cap, var(--orange));
+    box-shadow: inset 0 -2px 3px rgba(0,0,0,.35), inset 0 2px 2px rgba(255,255,255,.35); }
+  .knob::after { content: ""; position: absolute; left: 50%; top: 4px; width: 3px; height: 13px; margin-left: -1.5px; background: #fff;
+    border-radius: 2px; transform-origin: 50% 19px; transform: rotate(calc(-135deg + var(--v) * 270deg)); }
+  .knob:focus-visible { box-shadow: 0 0 0 2px var(--yellow); }
+  .knob.ro { cursor: default; }
+  .knob.big { width: 56px; height: 56px; }
+  .knob.big::after { transform-origin: 50% 24px; height: 16px; }
+  .scale { position: relative; }
+  .scale::before { content: ""; position: absolute; inset: -5px; border-radius: 50%;
+    background: conic-gradient(from -135deg, var(--silk) 0 1.5deg, transparent 1.5deg 67deg, var(--silk) 67deg 68.5deg, transparent 68.5deg 134deg, var(--silk) 134deg 136deg, transparent 136deg 202deg, var(--silk) 202deg 203.5deg, transparent 203.5deg 268.5deg, var(--silk) 268.5deg 270deg, transparent 270deg);
+    -webkit-mask: radial-gradient(circle, transparent 60%, #000 61%); mask: radial-gradient(circle, transparent 60%, #000 61%); opacity: .55; }
 
-  /* center */
-  .center { width: 27cqw; height: 27cqw; border-radius: 50%; background: radial-gradient(circle at 50% 40%, #1b1a19, #0c0b0b 70%);
-    box-shadow: 0 1cqw 2cqw rgba(0,0,0,.6), inset 0 .3cqw .4cqw rgba(255,255,255,.06); }
-  .center svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .ring { fill: none; stroke: #2a2725; stroke-width: 3.2; stroke-linecap: round; transition: stroke .25s, filter .25s; }
-  .ring.hit { stroke: var(--c); filter: drop-shadow(0 0 2px var(--c)); transition: none; }
-  .orbit { fill: var(--cream); }
-  .readout { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5cqw; }
-  .bpm { font-family: ui-monospace, Menlo, monospace; font-size: 5.2cqw; color: var(--lcd-ink); text-shadow: 0 0 1cqw rgba(255,90,50,.6); line-height: 1; }
-  .sub { font-size: 1.3cqw; color: var(--muted); letter-spacing: .16em; text-transform: uppercase; font-weight: 700; display: flex; gap: .6cqw; align-items: center; }
-  .sw { display: inline-flex; gap: .4cqw; }
-  .sw i { width: .9cqw; height: .9cqw; border-radius: 50%; background: #3a3633; }
-  .sw i.on { background: var(--cream); }
+  /* step / key row */
+  .steps { padding: 16px 24px 22px; background: var(--body); }
+  .steps-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .last { font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--yellow); }
+  .row16 { display: grid; grid-template-columns: repeat(16, 1fr); gap: 7px; }
+  .step { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .num { font-size: 10px; font-weight: 800; color: var(--muted); }
+  .key { width: 100%; height: 58px; border-radius: 4px; border: none; background: var(--k); cursor: pointer;
+    box-shadow: 0 4px 0 color-mix(in srgb, var(--k) 45%, #000), inset 0 2px 0 rgba(255,255,255,.35);
+    transition: transform .05s, box-shadow .05s, filter .12s; filter: saturate(.9) brightness(.9); }
+  .key:active, .key.flash { transform: translateY(3px); box-shadow: 0 1px 0 color-mix(in srgb, var(--k) 45%, #000), inset 0 2px 0 rgba(255,255,255,.35);
+    filter: brightness(1.15); transition: none; }
+  .vlab { font-size: 8.5px; font-weight: 700; color: var(--muted); text-align: center; text-transform: uppercase; letter-spacing: .04em; line-height: 1.1; min-height: 19px; }
+  .groups { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-top: 8px; }
+  .bracket { border: 2px solid rgba(233,225,210,.35); border-bottom: none; height: 7px; border-radius: 2px 2px 0 0; }
+  .glbl { text-align: center; margin-top: 5px; }
 
-  /* ---------- control bar ---------- */
-  .bar { display: flex; flex-wrap: wrap; gap: 12px 18px; align-items: center; margin-top: 18px; padding: 12px 14px;
-    background: #1b1a18; border: 1px solid #000; border-radius: 10px; }
-  .bar label { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 12px; }
-  .bar input[type=range] { accent-color: var(--orange); width: 110px; }
-  .bar input[type=checkbox] { accent-color: var(--orange); }
-  .start { font: 700 12px/1 inherit; letter-spacing: .14em; text-transform: uppercase; cursor: pointer;
-    background: var(--red); color: #fff; border: none; border-radius: 5px; padding: 11px 16px; box-shadow: 0 3px 0 #7d1d10; }
-  .start.on { background: #5d5853; box-shadow: 0 3px 0 #2c2a28; }
-  .status { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--muted); }
-  .led { width: 9px; height: 9px; border-radius: 50%; background: #333; }
-  .led.on { background: #59e36f; box-shadow: 0 0 6px #59e36f; }
-  .last { font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--yellow); margin-left: auto; }
-  p.help { color: var(--muted); font-size: 13px; margin: 16px 4px 0; }
+  .opts { display: flex; flex-wrap: wrap; gap: 10px 20px; padding: 10px 24px; background: var(--strip); border-top: 2px solid #111; }
+  .opts label { display: flex; gap: 7px; align-items: center; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; cursor: pointer; }
+  .opts input { accent-color: var(--orange); }
+
+  p.help { color: var(--muted); font-size: 13px; max-width: 80ch; margin: 20px 4px 0; }
   p.help b { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .voices { grid-template-columns: repeat(4, 1fr); }
+    .gap { display: none; }
+    .col:nth-child(-n+4) { border-bottom: 1px solid var(--panel-lo); }
+    .row16, .groups { grid-template-columns: repeat(8, 1fr); }
+    .groups > div { grid-column: span 2; }
+    .key { height: 50px; }
+  }
+  @media (max-width: 480px) {
+    .top { padding: 16px; gap: 14px 18px; }
+    .brand { width: 100%; }
+    .steps, .opts { padding-left: 14px; padding-right: 14px; }
+    .tag { min-width: 0; font-size: 8.5px; padding: 3px 4px; }
+    .knob { width: 40px; height: 40px; } .knob::before { inset: 8px; } .knob::after { transform-origin: 50% 16px; height: 11px; }
+    .col { padding: 12px 2px 14px; gap: 9px; }
+    .vname { font-size: 9.5px; }
+  }
 </style>
 </head>
 <body>
 <main>
-  <h1>DATO<i>‑808</i><small>USB expander for Dato DRUM</small></h1>
-  <div class="dato" id="dato">
-    <div class="oct outer"></div><div class="oct inner"></div>
-  </div>
+  <div class="machine">
+    <div class="top">
+      <div class="brand"><b>DATO<i>‑808</i></b><small>Rhythm Expander · Dato DRUM</small></div>
+      <div class="ctrl"><div class="readout" id="bpm">---</div><span class="lbl">Tempo</span></div>
+      <div class="ctrl"><div class="sel" id="swing"><span><div class="led"></div>OFF</span><span><div class="led"></div>MID</span><span><div class="led"></div>MAX</span></div><span class="lbl">Swing</span></div>
+      <div class="ctrl"><div class="sel">
+        <button class="abtn" id="bankA"><div class="led"></div><i></i>A</button>
+        <button class="abtn" id="bankB"><div class="led"></div><i></i>B</button></div><span class="lbl">Variation</span></div>
+      <div class="ctrl"><div class="scale"><div class="knob big" id="volKnob" style="--cap: var(--cream)"></div></div><span class="lbl">Volume</span></div>
+      <div class="ctrl" style="gap:10px"><button class="start" id="start">Start</button>
+        <div class="status"><div class="led green" id="dot"></div><span id="statusText">No MIDI</span></div></div>
+    </div>
 
-  <div class="bar">
-    <button class="start" id="start">Start</button>
-    <div class="status"><div class="led" id="dot"></div><span id="statusText">No MIDI</span></div>
-    <label>Volume <input id="vol" type="range" min="0" max="1" step="0.01"></label>
-    <label title="The Dato's own volume knob (CC 7) also sets this page's volume. Leave off if you turn the Dato down to mute its speaker."><input id="follow" type="checkbox"> Follow Dato volume</label>
-    <label><input id="accent" type="checkbox"> Accent</label>
-    <span class="last" id="last">–</span>
+    <div class="voices" id="voices"></div>
+
+    <div class="steps">
+      <div class="steps-head"><span class="lbl">Instrument keys · variation <span id="bankLbl">A</span></span><span class="last" id="last">–</span></div>
+      <div class="row16" id="row16"></div>
+      <div class="groups" id="groups"></div>
+    </div>
+
+    <div class="opts">
+      <label><input id="accent" type="checkbox"> Accent (velocity)</label>
+      <label title="The Dato's own volume knob (CC 7) also sets this volume. Leave off if you turn the Dato down to mute its speaker."><input id="follow" type="checkbox"> Follow Dato volume <span id="dvol"></span></label>
+    </div>
   </div>
 
   <p class="help">
-    Turn the Dato's own volume down, press <b>Start</b> and allow MIDI. Each Dato pad has 8 variants (◀ ▶ on the Dato)
-    and each one is its own 808 sound here. The sliders bend that pad's pitch. <b>Crush</b> and <b>Filter</b> are applied
-    here as you press them; <b>Repeat</b>, <b>Random</b> and <b>Swing</b> already come from the Dato. No Dato? Click the pads
-    (or keys <b>1–4</b>), the arrows, and hold Crush or Filter.
+    Turn the Dato's own volume down, press <b>Start</b> and allow MIDI. Every Dato pad has 8 variants and each one is
+    its own 808 sound here. The 16 keys play them: four per instrument, variations 1–4 on <b>A</b> and 5–8 on <b>B</b>;
+    their lights follow the Dato. The Dato's sliders turn the <b>Tune</b> knobs. <b>Crush</b> and <b>Filter</b> are applied
+    here (hold them on the Dato or turn their knobs); <b>Repeat</b> and <b>Random</b> come from the Dato itself.
+    Knobs: drag up or down, scroll, or arrow keys; double-click resets.
   </p>
 </main>
 
@@ -124,24 +158,25 @@
 // pads: 8 notes each; sliders CC 21-24; Crush CC12, Repeat CC17, Random CC16, Filter CC74 (+75 inverse),
 // Swing CC9 (1/64/127), Tempo CC15, Volume CC7. Clock runs continuously, no start/stop.
 const PADS = [
-  { id: 'top',    base: 38, cc: 22, c: 'var(--orange)', group: 'Snare · Clap', x: 50, y: 13.5 },
-  { id: 'right',  base: 46, cc: 23, c: 'var(--cream)',  group: 'Hats · Cymbal', x: 86.5, y: 50 },
-  { id: 'bottom', base: 54, cc: 24, c: 'var(--yellow)', group: 'Toms · Perc', x: 50, y: 86.5 },
-  { id: 'left',   base: 30, cc: 21, c: 'var(--red)',    group: 'Kicks', x: 13.5, y: 50 },
+  { id: 'top',    base: 38, cc: 22, c: 'var(--orange)', group: 'Snare · Clap' },
+  { id: 'right',  base: 46, cc: 23, c: 'var(--cream)',  group: 'Hihat · Cymbal' },
+  { id: 'bottom', base: 54, cc: 24, c: 'var(--yellow)', group: 'Toms · Perc' },
+  { id: 'left',   base: 30, cc: 21, c: 'var(--red)',    group: 'Bass Drum' },
 ];
+const ORDER = [3, 0, 2, 1]; // panel order left→right: kicks (red), snare (orange), toms (yellow), hats (cream)
 const FX = [
-  { id: 'random', cc: 16, c: 'var(--fx-random)', name: 'Random', x: 22, y: 22, local: false },
-  { id: 'crush',  cc: 12, c: 'var(--fx-crush)',  name: 'Crush',  x: 78, y: 22, local: true },
-  { id: 'repeat', cc: 17, c: 'var(--fx-repeat)', name: 'Repeat', x: 78, y: 78, local: false },
-  { id: 'filter', cc: 74, c: 'var(--fx-filter)', name: 'Filter', x: 22, y: 78, local: true },
+  { id: 'crush',  cc: 12, name: 'Crush',  cap: 'var(--cream)', local: true },
+  { id: 'filter', cc: 74, name: 'Filter', cap: 'var(--cream)', local: true },
+  { id: 'repeat', cc: 17, name: 'Repeat', cap: '#8d8780', local: false },
+  { id: 'random', cc: 16, name: 'Random', cap: '#8d8780', local: false },
 ];
 
 // ---------------- state ----------------
-const STORE = 'dato808.v3';
-const state = Object.assign({ vol: 0.8, follow: false, accent: true, variant: [1, 6, 4, 2] }, (() => {
+const STORE = 'dato808.v4';
+const state = Object.assign({ vol: 0.8, follow: false, accent: true, bank: 0, variant: [1, 6, 4, 2], level: [0.8, 0.8, 0.8, 0.9] }, (() => {
   try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch { return {}; }
 })());
-function save() { try { localStorage.setItem(STORE, JSON.stringify({ vol: state.vol, follow: state.follow, accent: state.accent, variant: state.variant })); } catch {} }
+function save() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch {} }
 const slider = [64, 64, 64, 64];
 
 // ---------------- audio engine ----------------
@@ -308,7 +343,7 @@ function play(pi, vi, vel) {
   if (!ready) return;
   const t = ctx.currentTime + 0.002;
   const k = Math.pow(2, ((slider[pi] - 64) / 64) * 7 / 12); // slider: ±7 semitones
-  const g = ctx.createGain(); g.connect(bus);
+  const g = ctx.createGain(); g.gain.value = state.level[pi]; g.connect(bus);
   VARIANTS[pi][vi][1](g, t, Math.max(0.05, vel), k);
   setTimeout(() => g.disconnect(), 4000);
   state.variant[pi] = vi; paintPad(pi); flashPad(pi);
@@ -331,97 +366,124 @@ function setFx(id, a) {
   }
 }
 
+
 // ---------------- UI ----------------
-const dato = document.getElementById('dato');
-const el = (html) => { const w = document.createElement('div'); w.innerHTML = html.trim(); return dato.appendChild(w.firstChild); };
-const pos = (e, x, y) => { e.style.left = x + '%'; e.style.top = y + '%'; return e; };
+function knob(el, get, set, { readonly = false, reset = 0.5 } = {}) {
+  el.tabIndex = readonly ? -1 : 0; el.setAttribute('role', 'slider'); el.setAttribute('aria-valuemin', 0); el.setAttribute('aria-valuemax', 100);
+  if (readonly) el.classList.add('ro');
+  const paint = () => { const v = get(); el.style.setProperty('--v', v); el.setAttribute('aria-valuenow', Math.round(v * 100)); };
+  if (readonly) { paint(); return paint; }
+  const put = v => { set(Math.min(1, Math.max(0, v))); paint(); };
+  let y0 = null, v0;
+  el.addEventListener('pointerdown', e => { el.setPointerCapture(e.pointerId); y0 = e.clientY; v0 = get(); el.focus(); initAudio(); });
+  el.addEventListener('pointermove', e => { if (y0 !== null) put(v0 + (y0 - e.clientY) / (e.shiftKey ? 600 : 150)); });
+  el.addEventListener('pointerup', () => y0 = null);
+  el.addEventListener('wheel', e => { e.preventDefault(); put(get() - e.deltaY / 800); }, { passive: false });
+  el.addEventListener('keydown', e => { const d = { ArrowUp: .02, ArrowRight: .02, ArrowDown: -.02, ArrowLeft: -.02 }[e.key]; if (d) { e.preventDefault(); put(get() + d); } });
+  el.addEventListener('dblclick', () => put(reset));
+  paint(); return paint;
+}
+const h = (html) => { const w = document.createElement('div'); w.innerHTML = html.trim(); return w.firstChild; };
+const knobHtml = (cap, label) => `<div class="ctrl"><div class="scale"><div class="knob" style="--cap:${cap}"></div></div><span class="lbl">${label}</span></div>`;
 
-const padEls = PADS.map((p, pi) => {
-  const pad = pos(el(`<div class="pad at" style="--c:${p.c}" role="button" aria-label="${p.id} pad">
-      <span class="group">${p.group}</span><span class="vname"></span><span class="dots">${'<i></i>'.repeat(8)}</span></div>`), p.x, p.y);
-  const vert = p.id === 'top' || p.id === 'bottom';
-  const prev = pos(el(`<div class="arrow at ${vert ? 'l' : 'u'}" role="button" aria-label="previous variant"></div>`), vert ? p.x - 11 : p.x, vert ? p.y : p.y - 11);
-  const next = pos(el(`<div class="arrow at ${vert ? 'r' : 'd'}" role="button" aria-label="next variant"></div>`), vert ? p.x + 11 : p.x, vert ? p.y : p.y + 11);
-  const tx = { top: [50, 29.5], right: [70.5, 50], bottom: [50, 70.5], left: [29.5, 50] }[p.id];
-  const track = pos(el(`<div class="track at ${vert ? 'v' : 'h'}" style="--c:${p.c}"><div class="fill"></div></div>`), tx[0], tx[1]);
-  pad.addEventListener('pointerdown', async () => { await initAudio(); play(pi, state.variant[pi], 0.9); });
-  const step = async (dir) => { await initAudio(); play(pi, (state.variant[pi] + dir + 8) % 8, 0.8); save(); };
-  prev.addEventListener('click', () => step(-1)); next.addEventListener('click', () => step(1));
-  return { pad, track, name: pad.querySelector('.vname'), dots: [...pad.querySelectorAll('.dots i')] };
+// instrument columns
+const voicesEl = document.getElementById('voices');
+const cols = [];
+ORDER.forEach(pi => {
+  const p = PADS[pi];
+  const col = voicesEl.appendChild(h(`<div class="col">
+    <div class="led"></div><div class="vname">${p.group}</div>
+    <div class="tag"></div><div class="vleds">${'<div class="led sm"></div>'.repeat(8)}</div>
+    ${knobHtml(p.c, 'Level')}${knobHtml(p.c, 'Tune')}</div>`));
+  const [lk, tk] = col.querySelectorAll('.knob');
+  cols[pi] = {
+    led: col.querySelector('.led'), tag: col.querySelector('.tag'), vleds: [...col.querySelectorAll('.vleds .led')],
+    level: knob(lk, () => state.level[pi], v => { state.level[pi] = v; save(); }, { reset: 0.8 }),
+    tune: knob(tk, () => slider[pi] / 127, v => { slider[pi] = Math.round(v * 127); }, { reset: 64 / 127 }),
+  };
 });
-function paintPad(pi) {
-  const e = padEls[pi], vi = state.variant[pi];
-  e.name.textContent = VARIANTS[pi][vi][0];
-  e.dots.forEach((d, i) => d.classList.toggle('on', i === vi));
-}
-function paintSlider(pi) { padEls[pi].track.style.setProperty('--v', (slider[pi] / 127).toFixed(3)); }
-function flashPad(pi) {
-  const p = padEls[pi].pad; p.classList.add('hit'); clearTimeout(p._t); p._t = setTimeout(() => p.classList.remove('hit'), 90);
-  const r = rings[pi]; r.classList.add('hit'); clearTimeout(r._t); r._t = setTimeout(() => r.classList.remove('hit'), 120);
-}
-
-const fxEls = {};
+voicesEl.appendChild(h('<div class="gap"></div>'));
+// effect columns
+const fxEls = {}, fxPaint = {};
 FX.forEach(f => {
-  const b = pos(el(`<button class="fx at" style="--c:${f.c}" aria-label="${f.name}"></button>`), f.x, f.y);
-  pos(el(`<span class="lbl fxl at">${f.name}</span>`), f.x, f.y + (f.y < 50 ? -8.2 : 8.2));
-  fxEls[f.id] = b;
-  b.title = f.local ? `Hold to apply ${f.name}` : `${f.name} is played by the Dato itself`;
-  if (f.local) {
-    let raf;
-    const ramp = (target) => { cancelAnimationFrame(raf); const go = () => {
-      const a = fxAmt[f.id] + (target - fxAmt[f.id]) * 0.12; setFx(f.id, Math.abs(a - target) < 0.01 ? target : a);
-      if (fxAmt[f.id] !== target) raf = requestAnimationFrame(go); }; go(); };
-    b.addEventListener('pointerdown', async e => { b.setPointerCapture(e.pointerId); await initAudio(); ramp(1); });
-    b.addEventListener('pointerup', () => ramp(0)); b.addEventListener('pointercancel', () => ramp(0));
+  const col = voicesEl.appendChild(h(`<div class="col">
+    <div class="led"></div><div class="vname">${f.name}</div>
+    <div class="tag dim">${f.local ? 'hold on Dato' : 'from Dato'}</div><div class="vleds"></div>
+    ${knobHtml(f.cap, 'Amount')}</div>`));
+  const k = col.querySelector('.knob');
+  fxEls[f.id] = { style: { setProperty: (_, a) => { col.querySelector('.led').classList.toggle('on', +a > 0.02); fxPaint[f.id] && fxPaint[f.id](); } } };
+  fxPaint[f.id] = knob(k, () => fxAmt[f.id], v => setFx(f.id, v), { readonly: !f.local, reset: 0 });
+});
+
+// 16 keys: 4 per instrument, A = variations 1-4, B = 5-8
+const row16 = document.getElementById('row16'), groupsEl = document.getElementById('groups');
+const keys = [];
+ORDER.forEach((pi, g) => {
+  const p = PADS[pi];
+  for (let j = 0; j < 4; j++) {
+    const s = row16.appendChild(h(`<div class="step"><div class="led"></div><span class="num">${g * 4 + j + 1}</span>
+      <button class="key" style="--k:${p.c}"></button><span class="vlab"></span></div>`));
+    const key = s.querySelector('.key');
+    key.addEventListener('pointerdown', async () => { await initAudio(); play(pi, state.bank * 4 + j, 0.9); save(); });
+    keys.push({ pi, j, led: s.querySelector('.led'), key, lab: s.querySelector('.vlab') });
   }
+  groupsEl.appendChild(h(`<div><div class="bracket"></div><div class="lbl glbl">${p.group}</div></div>`));
 });
 
-// center: ring arcs per pad, clock orbit, tempo + swing + Dato volume
-const center = pos(el(`<div class="center at"><svg viewBox="0 0 100 100"></svg>
-  <div class="readout"><div class="bpm" id="bpm">---</div><div class="sub">BPM</div>
-  <div class="sub">Swing <span class="sw" id="sw"><i></i><i></i><i></i></span></div>
-  <div class="sub" id="dvol">Dato vol –</div></div></div>`), 50, 50);
-const svg = center.querySelector('svg'), NS = 'http://www.w3.org/2000/svg';
-const arc = (a0, a1, r = 45) => { const p = a => [50 + r * Math.cos(a * Math.PI / 180), 50 + r * Math.sin(a * Math.PI / 180)];
-  const [x0, y0] = p(a0), [x1, y1] = p(a1); return `M${x0} ${y0} A${r} ${r} 0 0 1 ${x1} ${y1}`; };
-const rings = [[-130, -50], [-40, 40], [50, 130], [140, 220]].map((a, pi) => {
-  const path = document.createElementNS(NS, 'path'); path.setAttribute('d', arc(a[0], a[1])); path.setAttribute('class', 'ring');
-  path.style.setProperty('--c', PADS[pi].c); svg.appendChild(path); return path;
-});
-const orbit = document.createElementNS(NS, 'circle'); orbit.setAttribute('r', 2); orbit.setAttribute('cx', 50); orbit.setAttribute('cy', 5);
-orbit.setAttribute('class', 'orbit'); svg.appendChild(orbit);
+function paintBank() {
+  document.querySelector('#bankA .led').classList.toggle('on', state.bank === 0);
+  document.querySelector('#bankB .led').classList.toggle('on', state.bank === 1);
+  document.getElementById('bankLbl').textContent = state.bank ? 'B' : 'A';
+  keys.forEach(k => { const vi = state.bank * 4 + k.j; k.lab.textContent = VARIANTS[k.pi][vi][0]; k.key.setAttribute('aria-label', 'Play ' + VARIANTS[k.pi][vi][0]); });
+}
+document.getElementById('bankA').addEventListener('click', () => { state.bank = 0; save(); paintBank(); });
+document.getElementById('bankB').addEventListener('click', () => { state.bank = 1; save(); paintBank(); });
 
-PADS.forEach((_, pi) => { paintPad(pi); paintSlider(pi); });
+function paintPad(pi) {
+  const c = cols[pi], vi = state.variant[pi];
+  c.tag.textContent = VARIANTS[pi][vi][0];
+  c.vleds.forEach((l, i) => l.classList.toggle('on', i === vi));
+}
+function flash(e, cls, ms) { e.classList.add(cls); clearTimeout(e._t); e._t = setTimeout(() => e.classList.remove(cls), ms); }
+function flashPad(pi) {
+  flash(cols[pi].led, 'on', 110);
+  const vi = state.variant[pi];
+  if (Math.floor(vi / 4) === state.bank) { const k = keys.find(k => k.pi === pi && k.j === vi % 4); flash(k.led, 'on', 120); flash(k.key, 'flash', 90); }
+}
+function paintSlider(pi) { cols[pi].tune(); }
 
-const bpmEl = document.getElementById('bpm'), swEls = [...document.querySelectorAll('#sw i')], dvolEl = document.getElementById('dvol');
-function paintSwing(v) { const i = v < 43 ? 0 : v < 86 ? 1 : 2; swEls.forEach((e, k) => e.classList.toggle('on', k === i)); }
+PADS.forEach((_, pi) => paintPad(pi));
+paintBank();
+
+// top strip
+const volPaint = knob(document.getElementById('volKnob'), () => state.vol, v => setVol(v), { reset: 0.8 });
+function setVol(v) { state.vol = v; if (master) master.gain.setTargetAtTime(v, ctx.currentTime, 0.02); volPaint && volPaint(); save(); }
+const swingLeds = [...document.querySelectorAll('#swing .led')];
+function paintSwing(v) { const i = v < 43 ? 0 : v < 86 ? 1 : 2; swingLeds.forEach((e, k) => e.classList.toggle('on', k === i)); }
 paintSwing(0);
-
-// control bar
-const volEl = document.getElementById('vol'), followEl = document.getElementById('follow'), accentEl = document.getElementById('accent');
-volEl.value = state.vol; followEl.checked = state.follow; accentEl.checked = state.accent;
-const setVol = v => { state.vol = v; volEl.value = v; if (master) master.gain.setTargetAtTime(v, ctx.currentTime, 0.02); save(); };
-volEl.addEventListener('input', () => setVol(+volEl.value));
-followEl.addEventListener('change', () => { state.follow = followEl.checked; save(); });
+const accentEl = document.getElementById('accent'), followEl = document.getElementById('follow'), dvolEl = document.getElementById('dvol');
+accentEl.checked = state.accent; followEl.checked = state.follow;
 accentEl.addEventListener('change', () => { state.accent = accentEl.checked; save(); });
+followEl.addEventListener('change', () => { state.follow = followEl.checked; save(); });
 window.addEventListener('keydown', async e => {
-  const n = +e.key; if (n >= 1 && n <= 4 && !e.repeat) { await initAudio(); play(n - 1, state.variant[n - 1], 0.9); }
+  if (e.target.classList && e.target.classList.contains('knob')) return;
+  const n = +e.key; if (n >= 1 && n <= 4 && !e.repeat) { const pi = ORDER[n - 1]; await initAudio(); play(pi, state.variant[pi], 0.9); }
 });
 
 // ---------------- MIDI ----------------
-const lastEl = document.getElementById('last');
-let ticks = 0, tickTimes = [], idleT;
+const lastEl = document.getElementById('last'), bpmEl = document.getElementById('bpm');
+let tickTimes = [], idleT;
 function onMidi(e) {
   const d = e.data, st = d[0];
   if (st === 0xF8) {
-    ticks++; const now = performance.now(); tickTimes.push(now); if (tickTimes.length > 96) tickTimes.shift();
+    tickTimes.push(performance.now()); if (tickTimes.length > 96) tickTimes.shift();
     clearTimeout(idleT); idleT = setTimeout(() => { tickTimes = []; bpmEl.textContent = '---'; }, 700);
     return;
   }
   if (st >= 0xF0) return;
   const cmd = st & 0xF0, a = d[1], b = d[2];
   if (cmd === 0x90 && b > 0) {
-    lastEl.textContent = `note ${a} vel ${b}`;
+    lastEl.textContent = `note ${a} · vel ${b}`;
     const pi = PADS.findIndex(p => a >= p.base && a < p.base + 8);
     if (pi >= 0) play(pi, a - PADS[pi].base, accentEl.checked ? b / 127 : 0.85);
     return;
@@ -432,18 +494,15 @@ function onMidi(e) {
     if (pi >= 0) { slider[pi] = b; paintSlider(pi); return; }
     const f = FX.find(f => f.cc === a); if (f) { setFx(f.id, b <= 1 ? 0 : b / 127); return; }
     if (a === 9) paintSwing(b);
-    if (a === 7) { dvolEl.textContent = `Dato vol ${b}`; if (followEl.checked) setVol(b / 127); }
+    if (a === 7) { dvolEl.textContent = `(${b})`; if (followEl.checked) setVol(b / 127); }
   }
 }
-(function frame() {
+setInterval(() => {
   if (tickTimes.length > 24) {
-    const per = (tickTimes[tickTimes.length - 1] - tickTimes[0]) / (tickTimes.length - 1);
-    const bpm = 60000 / (per * 24);
+    const per = (tickTimes[tickTimes.length - 1] - tickTimes[0]) / (tickTimes.length - 1), bpm = 60000 / (per * 24);
     bpmEl.textContent = bpm > 20 && bpm < 999 ? Math.round(bpm) : '---';
   }
-  orbit.setAttribute('transform', `rotate(${(ticks % 96) / 96 * 360} 50 50)`);
-  requestAnimationFrame(frame);
-})();
+}, 250);
 
 const dot = document.getElementById('dot'), statusText = document.getElementById('statusText');
 function hookInputs(access) {
