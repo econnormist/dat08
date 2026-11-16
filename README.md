@@ -11,9 +11,14 @@ live with the Web Audio API.
 Bass drum, snare drum, low tom, hi tom, hand clap, cowbell, closed hi-hat and open hi-hat.
 The closed hat chokes a ringing open hat. Each sound has Level, Tune and Decay knobs.
 
-## Run it
+## Play it
 
-Web MIDI needs Chrome (or another Chromium browser) and a secure origin such as `localhost`:
+**Live:** <https://econnormist.github.io/dato-808/>. Open it in Chrome (or another Chromium browser,
+since Safari has no Web MIDI) and plug in the Dato DRUM.
+
+## Run it locally
+
+Web MIDI needs a secure origin such as `localhost`:
 
 ```bash
 python3 -m http.server 8808
