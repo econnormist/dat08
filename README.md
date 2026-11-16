@@ -11,7 +11,7 @@ the Dato's clock.
 
 ## Play it
 
-**Live:** <https://econnormist.github.io/dato-808/>. Open it in Chrome (or another Chromium browser,
+**Live:** <https://econnormist.github.io/dat08/>. Open it in Chrome (or another Chromium browser,
 since Safari has no Web MIDI) and plug in the Dato DRUM.
 
 1. Turn the Dato's own volume all the way down.
